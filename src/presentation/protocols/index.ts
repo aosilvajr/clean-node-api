@@ -1,3 +1,4 @@
 export * from './controller'
 export * from './http'
-export * from './email-validator'
+
+// Atalho para os protocolos genericos, utilizados pelos controllers
