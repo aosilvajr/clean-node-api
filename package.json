@@ -4,6 +4,15 @@
   "main": "index.js",
   "author": "Ailton Jr. <aosilvajr@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test:verbose": "jest --passWithNoTests --runInBand",
+    "test:unit": "yarn test -- --watch -c jest-unit-config.js",
+    "test:integration": "yarn test -- --watch -c jest-integration-config.js",
+    "test:staged": "yarn test -- --findRelatedTests",
+    "test:ci": "yarn test -- --coverage",
+    "prepare": "husky install"
+  },
   "devDependencies": {
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.31",
@@ -20,10 +29,5 @@
     "lint-staged": "^10.5.4",
     "ts-jest": "^26.5.2",
     "typescript": "^4.2.2"
-  },
-  "scripts": {
-    "test": "jest --passWithNoTests --watch",
-    "test:staged": "jest --passWithNoTests",
-    "prepare": "husky install"
   }
 }
