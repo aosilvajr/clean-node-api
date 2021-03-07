@@ -4,6 +4,7 @@
   "main": "index.js",
   "author": "Ailton Jr. <aosilvajr@gmail.com>",
   "license": "MIT",
+  "description": "NodeJs Rest API using TDD, Clean Architecture and Typescript",
   "scripts": {
     "start": "sucrase-node src/main/server.ts",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
