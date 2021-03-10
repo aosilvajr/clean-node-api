@@ -29,7 +29,6 @@ describe('Bcrypt Adapter', () => {
 
   test('Should return a valid hash on success', async () => {
     const sut = makeSut()
-
     const hash = await sut.hash('any_value')
 
     expect(hash).toBe('hash')
@@ -53,5 +52,12 @@ describe('Bcrypt Adapter', () => {
     await sut.compare('any_value', 'any_hash')
 
     expect(compareSpy).toHaveBeenCalledWith('any_value', 'any_hash')
+  })
+
+  test('Should return true when compare succeeds', async () => {
+    const sut = makeSut()
+    const isValid = await sut.compare('any_value', 'any_hash')
+
+    expect(isValid).toBe(true)
   })
 })
