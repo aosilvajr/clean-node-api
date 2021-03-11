@@ -54,13 +54,6 @@ describe('Login Routers', () => {
     })
 
     test('Should return 401 on login', async () => {
-      const password = await bcrypt.hash('123456', 12)
-
-      await accountCollection.insertOne({
-        name: 'Ailton',
-        email: 'aosilvajr@gmail.com',
-        password
-      })
       await request(app)
         .post('/api/login')
         .send({
