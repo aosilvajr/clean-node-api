@@ -18,7 +18,7 @@ describe('Login Routers', () => {
   })
 
   describe('POST /signup', () => {
-    test('Should return an account on signup', async () => {
+    test('Should return 200 on signup', async () => {
       await request(app)
         .post('/api/signup')
         .send({
