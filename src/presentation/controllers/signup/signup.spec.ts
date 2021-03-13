@@ -2,7 +2,7 @@ import { ServerError, MissingParamError } from '../../errors'
 import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
 import { HttpRequest } from '../../protocols'
 import { SignUpController } from './signup'
-import { AddAccount, AddAccountModel, AccountModel, Validation } from './signup-protocols'
+import { AddAccount, AuthenticationModel, AddAccountModel, AccountModel, Validation, Authentication } from './signup-protocols'
 
 const makeFakeRequest = (): HttpRequest => ({
   body: {
@@ -40,21 +40,34 @@ const makeValidation = (): Validation => {
   return new ValidationStub()
 }
 
+const makeAuthentication = (): Authentication => {
+  class AuthenticationStub implements Authentication {
+    async auth (authentication: AuthenticationModel): Promise<string> {
+      return await new Promise<string>(resolve => resolve('any_token'))
+    }
+  }
+
+  return new AuthenticationStub()
+}
+
 interface SutTypes {
   sut: SignUpController
   AddAccountStub: AddAccount
   validationStub: Validation
+  authenticationStub: Authentication
 }
 
 const makeSut = (): SutTypes => {
   const AddAccountStub = makeAddAccount()
   const validationStub = makeValidation()
-  const sut = new SignUpController(AddAccountStub, validationStub)
+  const authenticationStub = makeAuthentication()
+  const sut = new SignUpController(AddAccountStub, validationStub, authenticationStub)
 
   return {
     sut,
     AddAccountStub,
-    validationStub
+    validationStub,
+    authenticationStub
   }
 }
 
@@ -117,5 +130,19 @@ describe('SignUp Controller', () => {
 
     expect(httpResponse)
       .toEqual(badRequest(new MissingParamError('any_field')))
+  })
+
+  test('Should call Authentication with correct values', async () => {
+    const { sut, authenticationStub } = makeSut()
+    const authSpy = jest
+      .spyOn(authenticationStub, 'auth')
+
+    await sut.handle(makeFakeRequest())
+
+    expect(authSpy)
+      .toHaveBeenCalledWith({
+        email: 'any_mail@mail.com',
+        password: 'any_password'
+      })
   })
 })
