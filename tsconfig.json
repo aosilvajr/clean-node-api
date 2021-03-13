@@ -4,10 +4,10 @@
     "target": "es2019",
     "module": "commonjs",
     "esModuleInterop": true,
-    "sourceMap": true
-    // "strict": true,
-    // "skipLibCheck": true,
-    // "forceConsistentCasingInFileNames": true,
+    "sourceMap": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
   },
   "includes": [
     "src"
