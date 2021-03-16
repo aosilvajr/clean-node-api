@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - 14
 install:
-  - yarn install
+  - npm install
 script: 
   - eslint 'src/**'
-  - yarn test:coveralls
+  - npm test:coveralls
