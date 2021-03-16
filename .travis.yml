@@ -1,8 +1,10 @@
 language: node_js
 node_js:
   - 14
+cache:
+  yarn: true
 install:
-  - npm install
+  - yarn install
 script: 
   - eslint 'src/**'
-  - npm test:coveralls
+  - yarn test:coveralls
