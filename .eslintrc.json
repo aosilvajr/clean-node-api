@@ -2,7 +2,7 @@
   "extends": "standard-with-typescript",
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "project": "./tsconfig.eslint.json"
+    "project": "./tsconfig.json"
   },
   "plugins": [
     "eslint-plugin-import-helpers"

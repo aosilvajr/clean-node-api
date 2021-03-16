@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
+import { adaptRoute } from '@/main/adapter/express/express-routes-adapter'
+import { makeAddSurveyController } from '@/main/factories/controllers/survey/add-survey/add-survey-controller-factory'
+import { makeLoadSurveysController } from '@/main/factories/controllers/survey/load-surveys/load-surveys-controller-factory.ts'
+import { adminAuth } from '@/main/middlewares/admin-auth'
+import { auth } from '@/main/middlewares/auth'
 import { Router } from 'express'
-
-import { adaptRoute } from '../adapter/express/express-routes-adapter'
-import { makeAddSurveyController } from '../factories/controllers/survey/add-survey/add-survey-controller-factory'
-import { makeLoadSurveysController } from '../factories/controllers/survey/load-surveys/load-surveys-controller-factory.ts'
-import { adminAuth } from '../middlewares/admin-auth'
-import { auth } from '../middlewares/auth'
 
 export default (router: Router): void => {
   router.post('/surveys', adminAuth, adaptRoute(makeAddSurveyController()))
