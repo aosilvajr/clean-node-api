@@ -1,3 +1,4 @@
+import { mockSurveyModel, throwError } from '@/domain/test'
 import { InvalidParamError } from '@/presentation/errors'
 import { forbidden, serverError, ok } from '@/presentation/helpers/http/http-helper'
 import MockDate from 'mockdate'
@@ -21,16 +22,6 @@ const makeFakeRequest = (): HttpRequest => ({
   accountId: 'any_account_id'
 })
 
-const makeFakeSurvey = (): SurveyModel => ({
-  id: 'any_id',
-  question: 'any_question',
-  answers: [{
-    image: 'any_image',
-    answer: 'any_answer'
-  }],
-  date: new Date()
-})
-
 const makeFakeSurveyResult = (): SurveyResultModel => ({
   id: 'any_id',
   surveyId: 'valid_survey_id',
@@ -42,7 +33,7 @@ const makeFakeSurveyResult = (): SurveyResultModel => ({
 const makeLoadSurveyById = (): LoadSurveyById => {
   class LoadSurveyByIdStub implements LoadSurveyById {
     async loadById (id: string): Promise<SurveyModel> {
-      return await new Promise(resolve => resolve(makeFakeSurvey()))
+      return await new Promise(resolve => resolve(mockSurveyModel()))
     }
   }
 
@@ -112,7 +103,7 @@ describe('SaveSurveyResult Controller', () => {
 
     jest
       .spyOn(loadSurveyByIdStub, 'loadById')
-      .mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+      .mockImplementationOnce(throwError)
 
     const httpResponse = await sut.handle(makeFakeRequest())
 
@@ -152,7 +143,7 @@ describe('SaveSurveyResult Controller', () => {
 
     jest
       .spyOn(saveSurveyResultStub, 'save')
-      .mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+      .mockImplementationOnce(throwError)
 
     const httpResponse = await sut.handle(makeFakeRequest())
 

@@ -1,3 +1,4 @@
+import { throwError } from '@/domain/test'
 import { noContent, ok, serverError } from '@/presentation/helpers/http/http-helper'
 import MockDate from 'mockdate'
 
@@ -92,7 +93,7 @@ describe('LoadSurveys Controller', () => {
 
     jest
       .spyOn(loadSurveysStub, 'load')
-      .mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+      .mockImplementationOnce(throwError)
 
     const httpResponse = await sut.handle({})
 
