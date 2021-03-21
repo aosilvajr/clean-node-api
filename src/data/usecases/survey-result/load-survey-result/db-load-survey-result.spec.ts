@@ -4,17 +4,36 @@ import { mockSurveyResultModel } from '@/domain/test'
 
 import { DbLoadSurveyResult } from './db-load-survey-result'
 
-describe('Db LoadSurveyResult UseCase', () => {
-  test('Should call LoadSurveyResultRepository ', async () => {
-    class LoadSurveyResultRespositoryStub implements LoadSurveyResultRepository {
-      async loadBySurveyId (surveyId: string): Promise<SurveyResultModel> {
-        return await Promise.resolve(mockSurveyResultModel())
-      }
+interface SutTypes {
+  sut: DbLoadSurveyResult
+  LoadSurveyResultRepositoryStub: LoadSurveyResultRepository
+}
+
+const mockLoadSurveyResultRepository = (): LoadSurveyResultRepository => {
+  class LoadSurveyResultRepositoryStub implements LoadSurveyResultRepository {
+    async loadBySurveyId (surveyId: string): Promise<SurveyResultModel> {
+      return await Promise.resolve(mockSurveyResultModel())
     }
-    const loadSurveyResultRespositoryStub = new LoadSurveyResultRespositoryStub()
-    const sut = new DbLoadSurveyResult(loadSurveyResultRespositoryStub)
+  }
+
+  return new LoadSurveyResultRepositoryStub()
+}
+
+const makeSut = (): SutTypes => {
+  const LoadSurveyResultRepositoryStub = mockLoadSurveyResultRepository()
+  const sut = new DbLoadSurveyResult(LoadSurveyResultRepositoryStub)
+
+  return {
+    sut,
+    LoadSurveyResultRepositoryStub
+  }
+}
+
+describe('DbLoadSurveyResult UseCase', () => {
+  test('Should call LoadSurveyResultRepository ', async () => {
+    const { sut, LoadSurveyResultRepositoryStub } = makeSut()
     const loadBySurveyIdSpy = jest
-      .spyOn(loadSurveyResultRespositoryStub, 'loadBySurveyId')
+      .spyOn(LoadSurveyResultRepositoryStub, 'loadBySurveyId')
 
     await sut.load('any_survey_id')
     expect(loadBySurveyIdSpy).toHaveBeenCalledWith('any_survey_id')
