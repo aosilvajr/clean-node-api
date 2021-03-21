@@ -1,6 +1,6 @@
 {
   "name": "clean_node_api",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "author": "Ailton Jr. <aosilvajr@gmail.com>",
   "license": "MIT",
   "description": "NodeJs Rest API using TDD, Clean Architecture and Typescript",
