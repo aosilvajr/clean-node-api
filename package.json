@@ -2,7 +2,7 @@
   "name": "clean_node_api",
   "version": "2.2.0",
   "author": "Ailton Jr. <aosilvajr@gmail.com>",
-  "license": "MIT",
+  "license": "GPL-3.0-or-latest",
   "description": "NodeJs Rest API using TDD, Clean Architecture and Typescript",
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig-build.json",
