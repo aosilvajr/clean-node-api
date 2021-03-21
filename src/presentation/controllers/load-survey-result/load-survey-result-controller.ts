@@ -1,4 +1,6 @@
 import { LoadSurveyById } from '@/domain/usecases/survey/load-surveys-by-id'
+import { InvalidParamError } from '@/presentation/errors'
+import { forbidden } from '@/presentation/helpers/http/http-helper'
 
 import { Controller, HttpRequest, HttpResponse } from './load-survey-result-controller-protocols'
 
@@ -8,7 +10,10 @@ export class LoadSurveyResultController implements Controller {
   ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    await this.loadSurveyById.loadById(httpRequest.params.surveyId)
+    const survey = await this.loadSurveyById.loadById(httpRequest.params.surveyId)
+    if (!survey) {
+      return forbidden(new InvalidParamError('surveyId'))
+    }
     return await Promise.resolve(null!)
   }
 }
